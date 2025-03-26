@@ -1,6 +1,9 @@
 import csv
 import matplotlib.pyplot as plt
 
+print('this is a test')
+print('still testing')
+
 # Initialize a list for our data
 data = []
 
