@@ -21,9 +21,9 @@ class MedicalCostAnalyzer:
     def average_cost_by_age_group(self):
         """Calculates average cost per age group."""
         age_groups = {
-            "Under 25": [],
-            "25-50": [],
-            "50-75": []
+            "1. Under 25": [],
+            "2. 25-50": [],
+            "3. 50-75": []
         }
 
         for row in self.data:
@@ -31,11 +31,11 @@ class MedicalCostAnalyzer:
             cost = float(row[6])
 
             if age < 25:
-                age_groups["Under 25"].append(cost)
+                age_groups["1. Under 25"].append(cost)
             elif 25 <= age <= 50:
-                age_groups["25-50"].append(cost)
+                age_groups["2. 25-50"].append(cost)
             else:
-                age_groups["50-75"].append(cost)
+                age_groups["3. 50-75"].append(cost)
 
         return {group: round((sum(costs) / len(costs) if costs else 0), 2) for group, costs in age_groups.items()}
 
@@ -71,15 +71,15 @@ class MedicalCostAnalyzer:
         average_smoker_cost = round(sum(smoker_costs) / len(smoker_costs), 2) if smoker_costs else 0
         average_non_smoker_cost = round(sum(non_smoker_costs) / len(non_smoker_costs), 2) if non_smoker_costs else 0
 
-        return {'Average cost for smokers': average_smoker_cost, 'Average cost for nonsmokers': average_non_smoker_cost}
+        return {'Smoker average cost': average_smoker_cost, 'Nonsmoker average cost': average_non_smoker_cost}
 
     def average_cost_by_BMI(self):
         """Calculates average cost based on BMI."""
         bmi_categories = {
-        "Underweight": [],
-        "Normal weight": [],
-        "Overweight": [],
-        "Obese": []
+        "1. Underweight": [],
+        "2. Normal weight": [],
+        "3. Overweight": [],
+        "4. Obese": []
     }
 
         for row in self.data:
@@ -87,15 +87,15 @@ class MedicalCostAnalyzer:
             cost = float(row[6])
 
             if bmi < 18.5:
-                bmi_categories["Underweight"].append(cost)
+                bmi_categories["1. Underweight"].append(cost)
             elif 18.5 <= bmi < 24.9:
-                bmi_categories["Normal weight"].append(cost)
+                bmi_categories["2. Normal weight"].append(cost)
             elif 25 <= bmi < 29.9:
-                bmi_categories["Overweight"].append(cost)
+                bmi_categories["3. Overweight"].append(cost)
             else:
-                bmi_categories["Obese"].append(cost)
+                bmi_categories["4. Obese"].append(cost)
         
-        return {category: round(sum(cost) / len(cost), 2) if cost else 0 for category, cost in bmi_categories.items()}
+        return {category: round(sum(costs) / len(costs), 2) if costs else 0 for category, costs in bmi_categories.items()}
 
     def average_cost_by_sex(self):
         """Calculates average cost based on sex."""
@@ -116,19 +116,19 @@ class MedicalCostAnalyzer:
 
         return {'Average cost for males': average_male_cost, 'Average cost for females': average_female_cost}
 
-    # def cost_difference(self, category_data):
-    #     """Calculates percentage increase/decrease between categories."""
-    #     sorted_data = sorted(category_data.items())
-    #     cost_changes = {}
+    def cost_difference(self, category_data):
+        """Calculates percentage increase/decrease between categories."""
+        sorted_data = sorted(category_data.items())
+        cost_changes = {}
 
-    #     for i in range(1, len(sorted_data)):
-    #         prev_group, prev_cost = sorted_data[i-1]
-    #         curr_group, curr_cost = sorted_data[i]
+        for i in range(1, len(sorted_data)):
+            prev_group, prev_cost = sorted_data[i-1]
+            curr_group, curr_cost = sorted_data[i]
 
-    #         percentage_change = ((curr_cost - prev_cost) / prev_cost) * 100
-    #         cost_changes[f"{prev_group} → {curr_group}"] = percentage_change
+            percentage_change = round((((curr_cost - prev_cost) / prev_cost) * 100), 2)
+            cost_changes[f"{prev_group} → {curr_group}"] = percentage_change
 
-    #     return cost_changes
+        return cost_changes
 
 ##########################################################
 
@@ -140,11 +140,22 @@ avg_cost_by_smoking_status = medical_cost_data.average_cost_by_smoking_status()
 avg_cost_by_BMI = medical_cost_data.average_cost_by_BMI()
 avg_cost_by_sex = medical_cost_data.average_cost_by_sex()
 
-print(avg_cost_by_age)
-print(avg_cost_by_children)
-print(avg_cost_by_smoking_status)
-print(avg_cost_by_BMI)
-print(avg_cost_by_sex)
+# print(avg_cost_by_age)
+# print(avg_cost_by_children)
+# print(avg_cost_by_smoking_status)
+# print(avg_cost_by_BMI)
+# print(avg_cost_by_sex)
 
 ##########################################################
 
+cost_difference_age = medical_cost_data.cost_difference(avg_cost_by_age)
+cost_difference_children = medical_cost_data.cost_difference(avg_cost_by_children)
+cost_difference_smoking_status = medical_cost_data.cost_difference(avg_cost_by_smoking_status)
+cost_difference_bmi = medical_cost_data.cost_difference(avg_cost_by_BMI)
+cost_difference_sex = medical_cost_data.cost_difference(avg_cost_by_sex)
+
+# print(cost_difference_age)
+# print(cost_difference_children)
+# print(cost_difference_smoking_status)
+# print(cost_difference_bmi)
+# print(cost_difference_sex)
