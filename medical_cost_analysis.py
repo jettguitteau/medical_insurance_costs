@@ -130,6 +130,16 @@ class MedicalCostAnalyzer:
 
         return cost_changes
 
+    def run_analysis(self):
+        """Runs all analysis methods and returns a dictionary of results."""
+        return {
+            "Average Cost by Age Group": self.average_cost_by_age_group(),
+            "Average Cost by Children": self.average_cost_by_children(),
+            "Average Cost by Smoking Status": self.average_cost_by_smoking_status(),
+            "Average Cost by BMI": self.average_cost_by_BMI(),
+            "Average Cost by Sex": self.average_cost_by_sex(),
+        }
+
 ##########################################################
 
 medical_cost_data = MedicalCostAnalyzer('insurance.csv')
@@ -159,3 +169,8 @@ cost_difference_sex = medical_cost_data.cost_difference(avg_cost_by_sex)
 # print(cost_difference_smoking_status)
 # print(cost_difference_bmi)
 # print(cost_difference_sex)
+
+##########################################################
+
+all_medical_cost_data = medical_cost_data.run_analysis()
+print(all_medical_cost_data)
